@@ -19,8 +19,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class VolatileDemo {
 
     public static void main(String[] args) {
-        visibilityByVolatile();//验证volatile的可见性
-//        atomicByVolatile();//验证volatile不保证原子性
+//        visibilityByVolatile();//验证volatile的可见性
+        atomicByVolatile();//验证volatile不保证原子性
     }
 
     /**
@@ -36,17 +36,17 @@ public class VolatileDemo {
                 //线程暂停3s
                 TimeUnit.SECONDS.sleep(3);
                 myData.addToSixty();
-                System.out.println(Thread.currentThread().getName() + "\t update value:" + myData.num);
+                System.out.println(Thread.currentThread().getName() + "\t update value:" + myData.number);
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }, "thread1").start();
         //第二个线程是main线程
-        while (myData.num == 0) {
-            //如果myData的num一直为零，main线程一直在这里循环
+        while (myData.number == 0) {
+            //如果myData的number一直为零，main线程一直在这里循环
         }
-        System.out.println(Thread.currentThread().getName() + "\t mission is over, num value is " + myData.num);
+        System.out.println(Thread.currentThread().getName() + "\t mission is over, num value is " + myData.number);
     }
 
     /**
@@ -69,24 +69,25 @@ public class VolatileDemo {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        //1是main线程，2是后台GC线程
         while (Thread.activeCount()>2){
             Thread.yield();
         }
-        System.out.println(Thread.currentThread().getName()+"\t finally num value is "+myData.num);
+        System.out.println(Thread.currentThread().getName()+"\t finally num value is "+myData.number);
         System.out.println(Thread.currentThread().getName()+"\t finally atomicnum value is "+myData.atomicInteger);
     }
 }
 
 class MyData {
-        int num = 0;
-//    volatile int num = 0;
+      //  int number = 0;
+    volatile int number = 0;
 
     public synchronized void addToSixty() {
-        this.num = 60;
+        this.number = 60;
     }
-
+    //此时number前面是加了volatile关键字的
     public void addSelf(){
-        num++;
+        number++;
     }
 
     AtomicInteger atomicInteger = new AtomicInteger();
