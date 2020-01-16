@@ -7,13 +7,17 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * 读写锁
+ *
+ *
  * 多个线程同时读一个资源类没有任何问题，所以为了满足并发量，读取共享资源应该可以同时进行。
  * 但是
- * 如果有一个线程象取写共享资源来，就不应该自由其他线程可以对资源进行读或写
- * 总结
- * 读读能共存
- * 读写不能共存
- * 写写不能共存
+ * 如果有一个线程想去写共享资源，就不应该再有其他线程对资源进行读或写
+ * 总结：
+ *
+ *   读读能共存
+ *   读写不能共存
+ *   写写不能共存
  */
 public class ReadWriteLockDemo {
     public static void main(String[] args) {
@@ -54,6 +58,7 @@ class MyCache {
         rwLock.writeLock().lock();
         try {
             System.out.println(Thread.currentThread().getName() + "\t正在写入：" + key);
+            //0.3s
             TimeUnit.MILLISECONDS.sleep(300);
             map.put(key, value);
             System.out.println(Thread.currentThread().getName() + "\t写入完成");
@@ -62,6 +67,7 @@ class MyCache {
         } finally {
             rwLock.writeLock().unlock();
         }
+
 
     }
 
@@ -80,6 +86,9 @@ class MyCache {
 
     }
 
+    /**
+     * 模拟清除缓存
+     */
     public void clear() {
         map.clear();
     }

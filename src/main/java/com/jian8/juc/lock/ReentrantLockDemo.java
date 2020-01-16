@@ -3,6 +3,9 @@ package com.jian8.juc.lock;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 可重入锁（递归锁）
+ */
 public class ReentrantLockDemo {
     public static void main(String[] args) {
         Mobile mobile = new Mobile();

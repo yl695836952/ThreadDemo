@@ -1,5 +1,9 @@
 package com.jian8.juc.lock;
 
+/**
+ *
+ * 可重入锁（递归锁）
+ */
 public class SynchronizedDemo {
     public static void main(String[] args) {
         Phone phone = new Phone();

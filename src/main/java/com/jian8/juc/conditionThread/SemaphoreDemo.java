@@ -9,6 +9,7 @@ public class SemaphoreDemo {
         for (int i = 1; i <= 6; i++) {//模拟6部汽车
             new Thread(() -> {
                 try {
+                    //减停车费
                     semaphore.acquire();
                     System.out.println(Thread.currentThread().getName() + "\t抢到车位");
                     try {
@@ -20,6 +21,7 @@ public class SemaphoreDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
+                    //释放停车位
                     semaphore.release();
                 }
             }, "Car " + i).start();

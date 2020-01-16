@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 实现自旋锁
+ *
+ *
  * 自旋锁好处，循环比较获取知道成功位置，没有类似wait的阻塞
  *
  * 通过CAS操作完成自旋锁，A线程先进来调用mylock方法自己持有锁5秒钟，B随后进来发现当前有线程持有锁，不是null，所以只能通过自旋等待，知道A释放锁后B随后抢到
